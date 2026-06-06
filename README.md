@@ -1,6 +1,6 @@
 # Proxmox Host Operator Skill
 
-[![skills.sh](https://skills.sh/b/wauputr4/agent-proxmox/proxmox-host-operator)](https://skills.sh/wauputr4/agent-proxmox/proxmox-host-operator)
+[![skills.sh](https://skills.sh/b/wauputr4/agent-proxmox)](https://skills.sh/wauputr4/agent-proxmox/proxmox-host-operator)
 [![Validate](https://github.com/wauputr4/agent-proxmox/actions/workflows/validate.yml/badge.svg)](https://github.com/wauputr4/agent-proxmox/actions/workflows/validate.yml)
 
 Reusable AI agent skill for safe Proxmox VE host operations, LXC service handling, incident response, and maintenance logging.
