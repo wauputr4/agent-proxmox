@@ -1,0 +1,48 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Validate JSON
+        run: python -m json.tool skills.sh.json >/dev/null
+
+      - name: Validate skill frontmatter
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("skills/proxmox-host-operator/SKILL.md")
+          text = path.read_text(encoding="utf-8")
+          if not text.startswith("---\n"):
+              raise SystemExit("SKILL.md must start with YAML frontmatter")
+          end = text.find("\n---\n", 4)
+          if end == -1:
+              raise SystemExit("SKILL.md frontmatter is not closed")
+          frontmatter = text[4:end]
+          fields = {}
+          for line in frontmatter.splitlines():
+              if ":" in line:
+                  key, value = line.split(":", 1)
+                  fields[key.strip()] = value.strip()
+          if fields.get("name") != "proxmox-host-operator":
+              raise SystemExit("Unexpected skill name")
+          if not fields.get("description"):
+              raise SystemExit("Skill description is required")
+          PY
+
+      - name: Validate scripts
+        run: |
+          bash -n skills/proxmox-host-operator/scripts/collect-proxmox-triage.sh
+          python -m py_compile skills/proxmox-host-operator/scripts/new-log-entry.py
+

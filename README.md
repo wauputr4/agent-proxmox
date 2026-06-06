@@ -33,13 +33,13 @@ The skill is based on roughly two months of hands-on best practices from managin
 After publishing this repository on GitHub, install it with the skills CLI:
 
 ```bash
-npx skills add <github-owner>/agent-proxmox
+npx skills add wauputr4/agent-proxmox
 ```
 
-skills.sh lists GitHub-hosted skills automatically after users install them with the CLI. Add the install badge after the final GitHub owner/repo is known:
+skills.sh lists GitHub-hosted skills automatically after users install them with the CLI.
 
 ```md
-[![skills.sh](https://skills.sh/b/<github-owner>/agent-proxmox)](https://skills.sh/<github-owner>/agent-proxmox)
+[![skills.sh](https://skills.sh/b/wauputr4/agent-proxmox)](https://skills.sh/wauputr4/agent-proxmox)
 ```
 
 ## Repository Layout
@@ -62,6 +62,7 @@ skills/
 skills.sh.json
 README.md
 CONTRIBUTING.md
+CODE_OF_CONDUCT.md
 SECURITY.md
 LICENSE
 ```
