@@ -4,7 +4,17 @@ Reusable AI agent skill for safe Proxmox VE host operations, LXC service handlin
 
 This repository packages `proxmox-host-operator`, a portable `SKILL.md` workflow for agents that operate small to medium Proxmox hosts with LXC containers, Docker Compose services, Cloudflare Tunnel, Tailscale, backups, and LVM thin storage.
 
-The skill was distilled from roughly three months of real operational logs from a production-style Proxmox host, then generalized so it is not tied to any one organization, domain, IP address, or service name.
+The skill is based on roughly two months of hands-on best practices from managing a homelab Proxmox environment that runs production workloads: public websites, staging apps, shared databases, automation, AI tools, tunnels, backups, security hardening, and incident recovery. The source lessons were generalized so the skill is not tied to any one organization, domain, IP address, or service name.
+
+## Feature Summary
+
+- **Host and LXC operations:** Proxmox host inspection, LXC inventory, resource scaling, guest startup/shutdown order, Docker-in-LXC handling, and service persistence.
+- **Production service management:** Docker Compose, PM2, systemd, user systemd, reverse proxy, Cloudflare Tunnel, Tailscale, and public/private endpoint verification.
+- **Incident response:** Thin-pool exhaustion, read-only guests, disk-full events, crash loops, 502/1033 tunnel failures, DNS breakage, runaway processes, and high CPU or IO wait.
+- **Backup and disaster recovery:** Snapshot backup guardrails, Google Drive/rclone offsite backup, local cleanup, retention, backup-size interpretation, restore awareness, and storage safety checks.
+- **Security hardening:** SSH, Proxmox RBAC, scoped sudoers, secret-safe documentation, WordPress/PHP web-layer protections, Fail2Ban, Cloudflare WAF, and alerting hygiene.
+- **Migration planning:** Physical host relocation, subnet changes, internal bridge strategy, hardcoded IP discovery, NAT/Tailscale rebuild, Cloudflare recovery, validation, and rollback.
+- **AI agent activity logging:** Root changelog index, weekly changelog detail, per-LXC maintenance logs, incident notes, verification evidence, and reusable lessons.
 
 ## What It Helps Agents Do
 
