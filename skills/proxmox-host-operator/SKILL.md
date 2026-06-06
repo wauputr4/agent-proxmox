@@ -1,6 +1,6 @@
 ---
 name: proxmox-host-operator
-description: Operate and document Proxmox VE hosts safely. Use when Codex needs to inspect, maintain, troubleshoot, or log work on Proxmox nodes, LXC/VM guests, Docker Compose services inside LXC, PM2 or systemd services, Tailscale or Cloudflare Tunnel routing, backups, LVM thin storage, migrations, resource scaling, incident response, or recurring infrastructure maintenance.
+description: Operate and document Proxmox VE hosts safely. Use when Codex needs to inspect, maintain, troubleshoot, or log work on Proxmox nodes, LXC/VM guests, Docker Compose services inside LXC, PM2 or systemd services, Tailscale or Cloudflare Tunnel routing, Google Drive or rclone offsite backups, LVM thin storage, migrations, security hardening, AI agent activity logs, per-LXC maintenance notes, resource scaling, incident response, or recurring infrastructure maintenance.
 ---
 
 # Proxmox Host Operator

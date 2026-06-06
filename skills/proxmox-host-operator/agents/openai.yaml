@@ -1,4 +1,4 @@
 interface:
   display_name: "Proxmox Host Operator"
-  short_description: "Safe Proxmox ops and logging"
+  short_description: "Safe Proxmox ops, backups, and logs"
   default_prompt: "Use $proxmox-host-operator to inspect a Proxmox host, plan safe maintenance, execute scoped LXC or service changes, verify health, and update the operator log without exposing secrets."
