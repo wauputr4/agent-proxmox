@@ -16,7 +16,7 @@ Use this skill as an operating discipline for Proxmox work. Start with evidence,
 3. Treat storage, backup, networking, security, migration, and secrets as high-risk surfaces.
 4. Prefer one scoped change at a time, then verify before moving to the next change.
 5. If an operation stalls, loops, or takes unusually long, stop and report current evidence instead of silently continuing.
-6. Update the operator log and relevant inventory docs after every meaningful change or incident.
+6. Update the operator log, per-LXC activity log, changelog index, and relevant inventory docs after every meaningful change or incident.
 
 ## Safety Rules
 
@@ -37,6 +37,7 @@ Use this skill as an operating discipline for Proxmox work. Start with evidence,
 Read existing infrastructure docs, changelogs, container notes, backup scripts, and service definitions. If the repo has `README.md`, `server-specs.md`, `maintenance-best-practices.md`, `containers/`, `maintenance/`, or `changelog/`, inspect them before touching the host.
 
 For detailed logging structure, read `references/ops-logbook.md`.
+For AI agent activity logging that mirrors a Proxmox docs repository, read `references/activity-logging.md`.
 
 ### 2. Collect Host Evidence
 
@@ -106,6 +107,7 @@ Use the log generator when helpful:
 
 ```bash
 python3 scripts/new-log-entry.py --type incident --scope "LXC <id> <service>"
+python3 scripts/new-log-entry.py --type activity --scope "LXC <id> <service>"
 ```
 
 Every log entry must include: date, operator, scope, problem or intent, preflight evidence, actions, verification, status, rollback or follow-up, and secret redaction note when relevant.
@@ -115,6 +117,7 @@ Update inventory docs when resource allocation, ports, domains, storage, restart
 ## Reference Map
 
 - `references/ops-logbook.md`: log templates, inventory templates, documentation rules, redaction rules.
+- `references/activity-logging.md`: AI agent activity logging, per-LXC maintenance notes, weekly changelog, and docs sync rules.
 - `references/proxmox-runbooks.md`: reusable command patterns for host, LXC, Docker, backup, storage, network, tunnels, and shutdown/startup.
 - `references/incident-patterns.md`: common failure modes and prevention rules learned from real Proxmox operations.
 - `references/security-hardening.md`: security baseline, web-layer protections, RBAC/sudo delegation, and alerting rules.

@@ -100,9 +100,23 @@ def inventory(args: argparse.Namespace) -> str:
 """
 
 
+def activity(args: argparse.Namespace) -> str:
+    return f"""### {args.date}: {args.title}
+- **Operator:** {args.operator}
+- **Scope:** {args.scope}
+- **Intent:** <requested outcome>
+- **Preflight:** <key status checked before action>
+- **Action:** <what changed or what was inspected>
+- **Verification:** <command, endpoint, metric, or doc check>
+- **Docs Updated:** <root changelog | weekly changelog | container doc | best-practices | none + reason>
+- **Follow-up:** <remaining work or "none">
+- **Status:** {args.status}
+"""
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate a Proxmox operator log entry.")
-    parser.add_argument("--type", choices=("planned", "incident", "inventory"), default="planned")
+    parser.add_argument("--type", choices=("planned", "incident", "inventory", "activity"), default="planned")
     parser.add_argument("--title", default="<short title>")
     parser.add_argument("--scope", default="<host | LXC id | service>")
     parser.add_argument("--operator", default="AI Agent")
@@ -111,11 +125,13 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.type == "planned":
-      print(planned(args))
+        print(planned(args))
     elif args.type == "incident":
-      print(incident(args))
+        print(incident(args))
+    elif args.type == "activity":
+        print(activity(args))
     else:
-      print(inventory(args))
+        print(inventory(args))
     return 0
 
 

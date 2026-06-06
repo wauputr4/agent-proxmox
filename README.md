@@ -14,7 +14,7 @@ The skill was distilled from roughly three months of real operational logs from 
 - Apply reusable security hardening patterns for SSH, RBAC, sudoers, web-layer attacks, Fail2Ban, Cloudflare WAF, and secret-safe documentation.
 - Design offsite backup routines with Google Drive or another rclone-compatible cloud target.
 - Plan physical server relocation, subnet changes, internal bridge migration, DNS recovery, NAT rebuilds, and rollback.
-- Keep an operator log with scope, problem, cause, action, verification, rollback, and follow-up.
+- Keep AI agent activity logs with scope, problem, cause, action, verification, rollback, follow-up, and per-LXC documentation updates.
 - Avoid leaking secrets while still documenting useful infrastructure state.
 - Turn incident lessons into reusable runbooks and best practices.
 
@@ -41,6 +41,7 @@ skills/
     agents/openai.yaml
     references/
       incident-patterns.md
+      activity-logging.md
       migration-playbook.md
       ops-logbook.md
       proxmox-runbooks.md
