@@ -1,5 +1,8 @@
 # Proxmox Host Operator Skill
 
+[![skills.sh](https://skills.sh/b/wauputr4/agent-proxmox)](https://skills.sh/wauputr4/agent-proxmox)
+[![Validate](https://github.com/wauputr4/agent-proxmox/actions/workflows/validate.yml/badge.svg)](https://github.com/wauputr4/agent-proxmox/actions/workflows/validate.yml)
+
 Reusable AI agent skill for safe Proxmox VE host operations, LXC service handling, incident response, and maintenance logging.
 
 This repository packages `proxmox-host-operator`, a portable `SKILL.md` workflow for agents that operate small to medium Proxmox hosts with LXC containers, Docker Compose services, Cloudflare Tunnel, Tailscale, backups, and LVM thin storage.
@@ -37,10 +40,6 @@ npx skills add wauputr4/agent-proxmox
 ```
 
 skills.sh lists GitHub-hosted skills automatically after users install them with the CLI.
-
-```md
-[![skills.sh](https://skills.sh/b/wauputr4/agent-proxmox)](https://skills.sh/wauputr4/agent-proxmox)
-```
 
 ## Repository Layout
 
