@@ -1,0 +1,14 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Proxmox Ops",
+      "description": "Skills for safe Proxmox host operations, incident response, and logging.",
+      "skills": [
+        "proxmox-host-operator"
+      ]
+    }
+  ]
+}
+
