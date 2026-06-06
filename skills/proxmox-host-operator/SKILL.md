@@ -13,7 +13,7 @@ Use this skill as an operating discipline for Proxmox work. Start with evidence,
 
 1. Identify scope before commands: host, storage, LXC/VM ID, service, user, access path, and requested outcome.
 2. Run read-only diagnostics first unless the user gave an exact change request and the blast radius is already known.
-3. Treat storage, backup, networking, and secrets as high-risk surfaces.
+3. Treat storage, backup, networking, security, migration, and secrets as high-risk surfaces.
 4. Prefer one scoped change at a time, then verify before moving to the next change.
 5. If an operation stalls, loops, or takes unusually long, stop and report current evidence instead of silently continuing.
 6. Update the operator log and relevant inventory docs after every meaningful change or incident.
@@ -71,8 +71,12 @@ Classify the issue:
 - CPU, memory, or IO wait spike
 - Credential, env, or app config mismatch
 - Web-layer attack or notification storm
+- SSH, RBAC, sudoers, file permission, or exposed-admin risk
+- Physical relocation, subnet change, NAT rebuild, or internal bridge migration
 
 Load `references/incident-patterns.md` when symptoms match known Proxmox/LXC incidents.
+Load `references/security-hardening.md` for security reviews, web attack mitigation, RBAC delegation, or secret-handling tasks.
+Load `references/migration-playbook.md` for physical moves, IP/subnet changes, internal bridge design, hardcoded config discovery, or Tailscale/Cloudflare recovery.
 
 ### 4. Execute Narrowly
 
@@ -113,3 +117,5 @@ Update inventory docs when resource allocation, ports, domains, storage, restart
 - `references/ops-logbook.md`: log templates, inventory templates, documentation rules, redaction rules.
 - `references/proxmox-runbooks.md`: reusable command patterns for host, LXC, Docker, backup, storage, network, tunnels, and shutdown/startup.
 - `references/incident-patterns.md`: common failure modes and prevention rules learned from real Proxmox operations.
+- `references/security-hardening.md`: security baseline, web-layer protections, RBAC/sudo delegation, and alerting rules.
+- `references/migration-playbook.md`: physical relocation, subnet migration, internal bridge strategy, NAT repair, and rollback.

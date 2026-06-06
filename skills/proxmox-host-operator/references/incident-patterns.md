@@ -138,6 +138,8 @@ Prevention:
 - Use internal hostnames or an internal bridge subnet for LXC-to-LXC traffic.
 - Avoid router-subnet IPs in `.env`, compose files, and reverse proxies.
 
+For full relocation planning and rollback, load `migration-playbook.md`.
+
 ## Web Brute Force And Notification Storm
 
 Symptoms:
@@ -161,6 +163,8 @@ Prevention:
 - Block upload PHP execution.
 - Block user enumeration endpoints.
 - Consider Cloudflare WAF/rate limiting before traffic reaches the host.
+
+For broader prevention and delegation rules, load `security-hardening.md`.
 
 ## Command Escaping Or Archive Exclusion Damage
 
@@ -190,4 +194,3 @@ Preflight:
 - Check disk before pull.
 - Mount only intended data subdirectories.
 - Keep at least 15 to 20 GB disk for AI/vector workloads unless the image is known small.
-

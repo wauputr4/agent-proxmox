@@ -10,8 +10,10 @@ The skill was distilled from roughly three months of real operational logs from 
 
 - Inspect a Proxmox VE host before making changes.
 - Manage LXC, Docker Compose, PM2, systemd, user systemd, Cloudflare Tunnel, and Tailscale workflows safely.
-- Diagnose common Proxmox incidents such as thin-pool exhaustion, read-only LXC filesystems, crash loops, runaway agent processes, tunnel 502/1033 errors, and IP migration failures.
+- Diagnose common Proxmox incidents such as thin-pool exhaustion, read-only LXC filesystems, crash loops, runaway agent processes, tunnel 502/1033 errors, security incidents, and IP migration failures.
+- Apply reusable security hardening patterns for SSH, RBAC, sudoers, web-layer attacks, Fail2Ban, Cloudflare WAF, and secret-safe documentation.
 - Design offsite backup routines with Google Drive or another rclone-compatible cloud target.
+- Plan physical server relocation, subnet changes, internal bridge migration, DNS recovery, NAT rebuilds, and rollback.
 - Keep an operator log with scope, problem, cause, action, verification, rollback, and follow-up.
 - Avoid leaking secrets while still documenting useful infrastructure state.
 - Turn incident lessons into reusable runbooks and best practices.
@@ -39,8 +41,10 @@ skills/
     agents/openai.yaml
     references/
       incident-patterns.md
+      migration-playbook.md
       ops-logbook.md
       proxmox-runbooks.md
+      security-hardening.md
     scripts/
       collect-proxmox-triage.sh
       new-log-entry.py
