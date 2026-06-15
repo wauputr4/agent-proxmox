@@ -72,6 +72,7 @@ For WordPress, PHP, CMS, and similar public web apps:
 - After env changes in Docker Compose, recreate the service with `docker compose down && docker compose up -d`.
 - Watch for environment mismatches after migration: apps may point to a local database while the intended database is shared or internal.
 - Avoid hardcoded local router-subnet IPs in env files. Prefer service names, internal DNS, or stable internal bridge addresses.
+- Prioritize placing persistent AI agent instructions, context constraints, or rules in workspace-level files (such as `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`) at the root of the repository.
 
 ## Security Incident Log
 
