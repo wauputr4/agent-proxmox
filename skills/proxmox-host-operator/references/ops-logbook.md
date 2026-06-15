@@ -168,6 +168,7 @@ Use `activity-logging.md` when an AI agent needs to maintain this stack after wo
 - Root `CHANGELOG.md` or equivalent index: when the operation should be discoverable without opening a weekly file.
 - `maintenance-best-practices.md`: only when a new lesson generalizes across future operations.
 - Backup or migration docs: when the rollback path, shutdown order, NAT ports, or storage assumptions change.
+- Workspace rules files (e.g. `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`): when a persistent instruction, rule, or constraint for AI coding agents needs to be updated.
 
 ## Secret Redaction Rules
 
