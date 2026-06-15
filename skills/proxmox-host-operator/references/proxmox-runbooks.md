@@ -2,6 +2,9 @@
 
 Use these command patterns as starting points. Adapt IDs, paths, service names, and storage names to the current host.
 
+> [!TIP]
+> Proxmox CLI logs (such as `pct exec` or `docker logs`) can be extremely verbose. When running diagnostics or parsing output, consider prefixing commands with token-optimizing wrappers (such as `rtk`) where available (e.g., `rtk pct list`, `rtk docker ps`) to compress context usage.
+
 ## Read-Only Host Baseline
 
 ```bash

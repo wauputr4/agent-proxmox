@@ -1,6 +1,6 @@
 ---
 name: proxmox-host-operator
-description: Operate and document Proxmox VE hosts safely. Use when Codex needs to inspect, maintain, troubleshoot, or log work on Proxmox nodes, LXC/VM guests, Docker Compose services inside LXC, PM2 or systemd services, Tailscale or Cloudflare Tunnel routing, Google Drive or rclone offsite backups, LVM thin storage, migrations, security hardening, AI agent activity logs, per-LXC maintenance notes, resource scaling, incident response, or recurring infrastructure maintenance.
+description: Operate and document Proxmox VE hosts safely. Use when an AI agent needs to inspect, maintain, troubleshoot, or log work on Proxmox nodes, LXC/VM guests, Docker Compose services inside LXC, PM2 or systemd services, Tailscale or Cloudflare Tunnel routing, Google Drive or rclone offsite backups, LVM thin storage, migrations, security hardening, AI agent activity logs, per-LXC maintenance notes, resource scaling, incident response, or recurring infrastructure maintenance.
 ---
 
 # Proxmox Host Operator
@@ -29,12 +29,13 @@ Use this skill as an operating discipline for Proxmox work. Start with evidence,
 - When migrating from PM2/native services to Docker/systemd, remove or disable the old manager so it cannot resurrect ghost processes after reboot.
 - During network migration, keep Tailscale or another emergency backdoor alive and delete NAT rules selectively by line number.
 - Shut down frontends/proxies before automation and databases; start databases before dependent apps.
+- **Context & Token Optimization:** Proxmox host and guest logs can be extremely verbose, consuming large amounts of context window. Prioritize using token-optimizing wrappers or command proxies (such as `rtk` or custom filters) when executing high-volume CLI commands (like `git status`, `docker ps`, `pct list`, or log dumps) if available in the environment.
 
 ## Workflow
 
 ### 1. Build Context
 
-Read existing infrastructure docs, changelogs, container notes, backup scripts, and service definitions. If the repo has `README.md`, `server-specs.md`, `maintenance-best-practices.md`, `containers/`, `maintenance/`, or `changelog/`, inspect them before touching the host.
+Read existing infrastructure docs, changelogs, container notes, backup scripts, and service definitions. Prioritize checking any workspace-level rules files (such as `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`) at the root of the repository to load agent-specific directives. If the repo has `README.md`, `server-specs.md`, `maintenance-best-practices.md`, `containers/`, `maintenance/`, or `changelog/`, inspect them before touching the host.
 
 For detailed logging structure, read `references/ops-logbook.md`.
 For AI agent activity logging that mirrors a Proxmox docs repository, read `references/activity-logging.md`.
