@@ -30,6 +30,13 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+for id in "${LXC_IDS[@]}"; do
+  if [[ ! "$id" =~ ^[0-9]+$ ]]; then
+    echo "Invalid LXC ID: $id" >&2
+    exit 2
+  fi
+done
+
 run_section() {
   local title="$1"
   shift
@@ -60,7 +67,9 @@ run_shell_section "Host Identity" 'hostname; command -v pveversion >/dev/null &&
 run_shell_section "Guests" 'command -v pct >/dev/null && pct list || true; command -v qm >/dev/null && qm list || true'
 run_shell_section "Disk And LVM" 'df -hT; command -v lvs >/dev/null && lvs -a -o+seg_monitor || true'
 run_shell_section "Memory" 'free -h'
+run_shell_section "Memory Pressure" 'grep -E "^(MemAvailable|SwapTotal|SwapFree):" /proc/meminfo; test -r /proc/pressure/memory && cat /proc/pressure/memory || true'
 run_shell_section "Failed Units" 'systemctl --failed --no-pager'
+run_shell_section "Timers" 'systemctl list-timers --all --no-pager'
 run_shell_section "Recent Host Errors" 'journalctl -p err -n 80 --no-pager'
 run_shell_section "NAT Rules" 'iptables -t nat -L PREROUTING -n -v --line-numbers; iptables -t nat -L POSTROUTING -n -v --line-numbers'
 run_shell_section "Tailscale" 'command -v tailscale >/dev/null && tailscale status || true'
@@ -75,4 +84,3 @@ if [[ ${#LXC_IDS[@]} -gt 0 ]]; then
     run_shell_section "LXC ${id} Top Processes" "pct exec ${id} -- ps aux --sort=-%cpu | head -n 15"
   done
 fi
-

@@ -108,6 +108,39 @@ Response:
 - Restart the actual service manager.
 - Log the root cause and the old manager removed.
 
+## Runtime Build Exhaustion Or Failed Cutover
+
+Symptoms:
+
+- SSH or the guest becomes unresponsive during a monorepo build.
+- Host swap rises or an unrelated LXC process is killed by the global OOM killer.
+- A new release is healthy on direct ports but public traffic remains old or returns 502.
+- Duplicate workers process the same queue after a blue-green cutover.
+
+Response:
+
+- Stop the aggregate build and recover service health before retrying.
+- Check host memory, swap, pressure stall information, and kernel OOM logs; guest health alone is insufficient.
+- Rebuild off-host and serially from a clean exact revision.
+- Inspect the live proxy include or `sites-enabled` file before editing an assumed symlink target.
+- Keep the previous generation running, validate proxy syntax, switch narrowly, and ensure only one side-effect worker is active.
+
+## Monitoring Or Backup Automation Drift
+
+Symptoms:
+
+- A monitor fails once during early boot because the Proxmox API returns empty or invalid data.
+- Repeated alerts flood email or chat while the underlying state is unchanged.
+- A failed notification is recorded as sent and never retried.
+- Backup reports success although metrics, upload, or cleanup failed.
+
+Response:
+
+- Distinguish unknown data from healthy state and use bounded retry for early-boot dependencies.
+- Keep manual monitor runs dry-run by default; deduplicate criticals and batch warnings.
+- Persist notification state only when at least one required delivery path succeeds.
+- Serialize backups with a lock, fail closed on unreadable capacity metrics, and verify artifacts remotely before cleanup.
+
 ## IP Migration Or Subnet Change
 
 Symptoms:
