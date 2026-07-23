@@ -13,11 +13,13 @@ The skill is based on roughly two months of hands-on best practices from managin
 
 - **Host and LXC operations:** Proxmox host inspection, LXC inventory, resource scaling, guest startup/shutdown order, Docker-in-LXC handling, and service persistence.
 - **Production service management:** Docker Compose, PM2, systemd, user systemd, reverse proxy, Cloudflare Tunnel, Tailscale, and public/private endpoint verification.
+- **Runtime-safe releases:** Off-host serial builds, checksummed artifacts, inactive-port validation, blue-green cutover, singleton workers, and runnable rollback generations.
 - **Incident response:** Thin-pool exhaustion, read-only guests, disk-full events, crash loops, 502/1033 tunnel failures, DNS breakage, runaway processes, and high CPU or IO wait.
 - **Backup and disaster recovery:** Snapshot backup guardrails, Google Drive/rclone offsite backup, local cleanup, retention, backup-size interpretation, restore awareness, and storage safety checks.
 - **Security hardening:** SSH, Proxmox RBAC, scoped sudoers, secret-safe documentation, WordPress/PHP web-layer protections, Fail2Ban, Cloudflare WAF, and alerting hygiene.
 - **Migration planning:** Physical host relocation, subnet changes, internal bridge strategy, hardcoded IP discovery, NAT/Tailscale rebuild, Cloudflare recovery, validation, and rollback.
 - **AI agent activity logging:** Root changelog index, weekly changelog detail, per-LXC maintenance logs, incident notes, verification evidence, and reusable lessons.
+- **Monitoring safety:** Dry-run defaults, maintenance windows, deduplicated and batched alerts, fail-closed backups, and delivery retry semantics.
 
 ## What It Helps Agents Do
 

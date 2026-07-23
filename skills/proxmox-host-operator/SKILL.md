@@ -24,11 +24,14 @@ Use this skill as an operating discipline for Proxmox work. Start with evidence,
 - Do not print or copy full `.env` files, private keys, tokens, cookies, or database URLs containing credentials.
 - Do not run `iptables -F`, `iptables -t nat -F`, broad `rm -rf`, or destructive storage commands without an explicit rollback path and user confirmation.
 - Before Docker pulls, builds, backups, or large restores, check `df -h`, `lvs`, and the target LXC disk.
+- Treat production and preview LXCs as runtimes, not builders. Build large or multi-app releases off-host, serially, from an exact revision; checksum the artifact before promotion.
 - For LVM thin pools, treat `Data% >= 85` as warning and `>= 95` as critical. Prefer `pct fstrim`, Docker cache cleanup, and backup safety checks before heavy writes.
 - When changing Docker Compose environment, use `docker compose down && docker compose up -d` when a simple restart would keep stale env.
 - When migrating from PM2/native services to Docker/systemd, remove or disable the old manager so it cannot resurrect ghost processes after reboot.
 - During network migration, keep Tailscale or another emergency backdoor alive and delete NAT rules selectively by line number.
 - Shut down frontends/proxies before automation and databases; start databases before dependent apps.
+- Before a data refresh, back up the target, stop its writers, keep the source read-only, verify checksums and record counts, and remove temporary source snapshots.
+- Audit scripts and tracked backup/config files for embedded credentials and private recipients before publishing; secret safety is not limited to `.env` files.
 
 ## Workflow
 
@@ -71,6 +74,9 @@ Classify the issue:
 - Backup or restore failure
 - CPU, memory, or IO wait spike
 - Credential, env, or app config mismatch
+- Runtime build pressure, release cutover, rollback, or duplicate singleton workers
+- Production-to-preview data refresh or restore isolation
+- Monitoring false positives, alert storms, or backup fail-open behavior
 - Web-layer attack or notification storm
 - SSH, RBAC, sudoers, file permission, or exposed-admin risk
 - Physical relocation, subnet change, NAT rebuild, or internal bridge migration
@@ -100,6 +106,8 @@ Verify at every relevant layer:
 - Runtime state: Docker/PM2/systemd process health.
 - Network state: internal port checks, tunnel status, public health endpoint if applicable.
 - Persistence: `onboot`, restart policy, user linger, cron/systemd timers, or saved PM2 state.
+- Release safety: exact revision, artifact checksum, inactive-generation health, active proxy config, singleton workers, and runnable rollback.
+- Data refresh safety: source remained read-only, target-only restore scope, counts/checksums, environment isolation, and temporary-file cleanup.
 
 ### 6. Log and Sync Docs
 

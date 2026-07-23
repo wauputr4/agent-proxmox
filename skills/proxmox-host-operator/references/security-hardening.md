@@ -68,6 +68,8 @@ For WordPress, PHP, CMS, and similar public web apps:
 ## Credential And Environment Hygiene
 
 - Never paste full `.env` files into chat, commits, logs, or issue comments.
+- Scan tracked scripts, compose backups, fixtures, shell exports, recipient fields, and generated archives for embedded credentials or private contact data before publishing. `.gitignore` does not protect files already tracked.
+- Load notifier credentials, keyring passwords, recipients, and API tokens from root-only configuration or a secret manager rather than source constants.
 - When checking env, print only key names or a boolean presence check.
 - After env changes in Docker Compose, recreate the service with `docker compose down && docker compose up -d`.
 - Watch for environment mismatches after migration: apps may point to a local database while the intended database is shared or internal.
@@ -85,4 +87,3 @@ Record:
 - False-positive checks.
 - New prevention rule or follow-up.
 - Secret redaction statement.
-

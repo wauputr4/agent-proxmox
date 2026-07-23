@@ -16,7 +16,46 @@ free -h
 uptime
 systemctl --failed --no-pager
 journalctl -p err -n 80 --no-pager
+grep -E '^(MemAvailable|SwapTotal|SwapFree):' /proc/meminfo
+cat /proc/pressure/memory
+systemctl list-timers --all --no-pager
 ```
+
+## Runtime Build And Release Safety
+
+Do not use a production or preview LXC as the primary builder for a large application or monorepo. Build an exact tag or commit on CI or a temporary builder, one application at a time, then checksum and transfer the artifact.
+
+If an in-guest build is explicitly approved, use a maintenance window, stop non-essential processes, run serially with low CPU/IO priority, and define host-memory and swap abort thresholds before starting. Stop when the threshold is crossed; adding guest RAM does not protect a memory-constrained host.
+
+For a reversible release:
+
+1. Record the exact revision and checksum.
+2. Back up database, cache, environment, proxy, process-manager, symlink, and active-config state.
+3. Record dependency order, migration compatibility, per-app health criteria, and the observation-window rollback threshold.
+4. Install and test the new generation on inactive ports.
+5. Validate the actual active proxy file, not an assumed `sites-available` target.
+6. Run the proxy syntax check, switch upstreams atomically where supported, and reload gracefully.
+7. Keep the previous generation runnable until the observation window ends.
+8. Run only one side-effect worker, scheduler, or queue consumer per environment.
+
+Verify direct origins, public routes, protected routes, immutable assets, process restart counts, failed units, resource pressure, and the rollback path.
+
+## Read-Only Source Data Refresh
+
+Use this order when refreshing preview or staging from production:
+
+1. Confirm the source commands are read-only and the target environment cannot send production side effects.
+2. Stop only target writers and workers; leave unrelated environments running.
+3. Back up the target database, cache, runtime, and checksums.
+4. Create transactionally consistent source snapshots with compatible database/client versions, checksum them, transfer them over an authenticated encrypted path, and verify target checksums.
+5. Restore only the named target database and cache instance.
+6. Verify schema/migration counts, representative record counts, cache keys, ownership, and environment markers.
+7. Start target web processes and exactly one approved worker, then smoke-test internal and public routes.
+8. Delete temporary source snapshots only after target verification; retain the target rollback bundle.
+
+Copy Redis only when its state is required; otherwise prefer rebuilding disposable cache. If copied, define the RDB/AOF consistency point, target DB/keyspace, TTL expectations, and service ownership first.
+
+Never infer environment isolation from matching key names. Check high-risk values such as payment mode, email/queue targets, OAuth callbacks, provisioning flags, observability labels, database, and cache endpoints without logging their secrets.
 
 ## LXC Baseline
 
@@ -120,11 +159,14 @@ vzdump <id> --mode snapshot --storage <backup-storage> --compress zstd
 
 Backup guardrails:
 
+- Acquire a non-blocking lock so overlapping timer/manual runs cannot race.
 - Check LVM thin pool and backup storage before starting.
+- Fail closed if capacity metrics cannot be read or parsed.
 - Use modern pruning such as `--prune-backups keep-last=1` where supported.
 - Upload or move completed backups offsite if local storage is limited.
 - Include both LXC `.tar.zst` and VM `.vma.zst` artifacts in backup accounting.
 - If suspend-mode backup fails on Docker `fuse-overlayfs`, consider excluding `/var/lib/docker` only after documenting the data-loss tradeoff and ensuring app data is backed up separately.
+- Mark success only after snapshot creation, artifact discovery, upload verification, and intended local cleanup all succeed.
 
 ## Google Drive Or rclone Offsite Backup
 
@@ -153,8 +195,18 @@ Operational rules:
 - Keep cloud retention longer than local retention when cloud quota allows it, but test restore paths periodically.
 - Use `rclone lsd`, `rclone ls`, or `rclone check` for verification when time and bandwidth allow.
 - Run destructive cloud cleanup only in a dedicated backup folder and use `--dry-run` first.
+- Do not disable provider trash or permanently delete remote history unless retention scope and recovery expectations are explicit.
 - Send a concise notification with status, created artifacts, uploaded size, local cleanup status, and any failed guest IDs.
 - Schedule backup windows away from builds, Docker pulls, and high-traffic service windows.
+
+## Monitoring And Notifications
+
+- Make manual execution dry-run by default; require an explicit flag to send or persist state.
+- Suppress only expected service alerts during a documented, expiring maintenance window; keep host, storage, and backup-failure alerts active.
+- Deduplicate recurring critical alerts and batch noisy warnings.
+- If every notification channel fails, do not advance deduplication state; allow the next run to retry.
+- Treat missing, empty, stale, or invalid monitoring data as unknown, not healthy. Early-boot API calls commonly need bounded retry or a clear failed-unit alert.
+- Keep recipients, API credentials, keyring passwords, and notifier config outside tracked scripts.
 
 ## Tailscale And NAT
 
