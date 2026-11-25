@@ -7,7 +7,7 @@ description: Inspect and operate Proxmox VE nodes, clusters, QEMU VMs and LXC co
 
 ## Decide what layer owns the problem
 
-1. Confirm the node, guest type and ID, target environment, allowed action, and fallback access. On a cluster confirm the owning node with `pvesh get /cluster/resources --type vm`; check quorum before writes. Use a scoped API token with privilege separation or the established SSH operator account. Confirm what access actually works.
+1. Confirm the node, guest type and ID, target environment, allowed action, and fallback access. On a cluster confirm the owning node with `pvesh get /cluster/resources --type vm` and check quorum before writes. Use a scoped API token with privilege separation or the established SSH operator account. Confirm what access actually works.
 2. Start with the smallest useful probe. Check platform version, the affected guest state, active or failed tasks, and the specific storage or service. Use the collector when several layers need inspection:
 
    ```bash
