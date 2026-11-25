@@ -46,3 +46,18 @@ jobs:
           bash -n skills/proxmox-host-operator/scripts/collect-proxmox-triage.sh
           python -m py_compile skills/proxmox-host-operator/scripts/new-log-entry.py
 
+      - name: Check triage argument handling
+        run: |
+          collector=skills/proxmox-host-operator/scripts/collect-proxmox-triage.sh
+          bash "$collector" --help
+          for option in --lxc --vm; do
+            for value in '' '101,,102' '101,'; do
+              result=0
+              timeout 5s bash "$collector" "$option" "$value" || result=$?
+              test "$result" = 2
+            done
+            result=0
+            timeout 5s bash "$collector" "$option" || result=$?
+            test "$result" = 2
+          done
+
