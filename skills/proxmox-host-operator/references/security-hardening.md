@@ -71,7 +71,7 @@ For WordPress, PHP, CMS, and similar public web apps:
 - Scan tracked scripts, compose backups, fixtures, shell exports, recipient fields, and generated archives for embedded credentials or private contact data before publishing. `.gitignore` does not protect files already tracked.
 - Load notifier credentials, keyring passwords, recipients, and API tokens from root-only configuration or a secret manager rather than source constants.
 - When checking env, print only key names or a boolean presence check.
-- After env changes in Docker Compose, recreate the service with `docker compose down && docker compose up -d`.
+- After an authorized env change in Docker Compose, validate the config quietly and reconcile only the affected service. See [service operations](proxmox-runbooks.md#recover-the-owning-runtime).
 - Watch for environment mismatches after migration: apps may point to a local database while the intended database is shared or internal.
 - Avoid hardcoded local router-subnet IPs in env files. Prefer service names, internal DNS, or stable internal bridge addresses.
 

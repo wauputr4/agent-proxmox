@@ -23,14 +23,13 @@ pct exec <id> -- bash -lc 'touch /tmp/write-test && rm /tmp/write-test'
 Response:
 
 - Stop heavy writes, pulls, and backups.
-- Run `pct fstrim` on active containers.
-- Clean Docker cache in noisy LXCs.
-- Move non-critical root disks or backups to less constrained storage.
+- Measure thin-pool data and metadata separately. Identify safely reclaimable data first and confirm discard support before a targeted trim.
+- When capacity allows, remove only independently reproducible and unreferenced caches or move confirmed inactive artifacts to other storage.
 - Add backup script safety checks for high `Data%`.
 
 Prevention:
 
-- Daily or scheduled `fstrim`.
+- Use scheduled discard only for filesystems and backends where support and benefit have been verified.
 - Backup storage separate from thin rootfs storage.
 - Alert before `Data% >= 85`.
 
